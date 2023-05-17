@@ -9,7 +9,8 @@ let successful = document.getElementById('registerSuccessful')
 let danger = document.getElementById('registerDanger')
 let elemanSayisi = document.getElementById('toplamEleman')
 let removeBtn = document.getElementById('removeBtn')
-
+let pasword = document.getElementById('passwordInput')
+let email = document.getElementById('emailInput')
 
 document.getElementById('kaydetBtn').addEventListener('click', function(){
     let pasword = document.getElementById('passwordInput')
@@ -69,7 +70,10 @@ let userCounter = 1
 document.getElementById('listeleBtn').addEventListener('click',function(){
 
     
-    
+    if(email.value == '' || pasword.value == ''){
+        danger.innerHTML = 'Lütfen Bütün Alanları Doldurunuz ! '
+        return false;
+    }
 
     
    
