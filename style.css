@@ -1,6 +1,12 @@
+
+
 .list-group-item {
     color: red;
+    border-bottom:none;
+    
   }
+
+
 p{
     margin: 2rem;
     color: #0C134F;

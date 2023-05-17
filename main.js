@@ -8,6 +8,8 @@ let kayitList = document.getElementById('kayit-list')
 let successful = document.getElementById('registerSuccessful')
 let danger = document.getElementById('registerDanger')
 let elemanSayisi = document.getElementById('toplamEleman')
+let removeBtn = document.getElementById('removeBtn')
+
 
 document.getElementById('kaydetBtn').addEventListener('click', function(){
     let pasword = document.getElementById('passwordInput')
@@ -43,8 +45,13 @@ document.getElementById('kaydetBtn').addEventListener('click', function(){
     pasword.value = '';
 
     setTimeout(() => {  //setTimeout bir kez çalıştırır
-        successful.innerHTML = '';
+        if (counter >= newData.length) {
+            successful.innerHTML = '';
+            readListBtn.click();
+        }
+  
     }, 1000);
+    
 
     console.log(newData)
 
@@ -56,35 +63,54 @@ document.getElementById('kaydetBtn').addEventListener('click', function(){
      }
 
 })
-
+let temp = ''; //Kayıtları yazdırmak için boş string oluşturduk
+let counter = 0; //Sırayla  yazdırması için sayaç oluşturduk
+let userCounter = 1
 document.getElementById('listeleBtn').addEventListener('click',function(){
 
-    let temp = ''; //Kayıtları yazdırmak için boş string oluşturduk
-    let counter = 0; //Sırayla  yazdırması için sayaç oluşturduk
+    
     
 
     
    
     let listeokuyucu = setInterval(function()  { //setInterval belirli aralıklarla çalıştırır
 
-        temp+= `<li class="list-group-item" id="kayit-list">Email adresi : ${newData[counter]}</li> `
-        counter++;
-        temp+= `<li class="list-group-item" id="kayit-list">Password : ${newData[counter]}</li> `
-        counter++;
-    
+      
+
+        temp += `<li class="list-group-item" id="kayit-list">
+        ${userCounter}. Üye <br>
+        Email adresi: ${newData[counter]} <br>
+        Password: ${newData[counter + 1]} <br>
+        </li>`;
+        counter+=2;
+        userCounter++;
+        
+      
         kayitList.innerHTML = temp
 
-    if(counter == newData.length){
        
-        elemanSayisi.innerHTML = `Toplam Üye = ${newData.length/2}`
-        clearInterval(listeokuyucu)
-    }   
+        clearInterval(listeokuyucu); 
         
     }, 1000);
+    elemanSayisi.innerHTML = `Toplam Üye = ${newData.length/2}`
 
 })
 
-
-
-
-
+document.getElementById('removeBtn').addEventListener('click', function() {
+    const uyeSil = prompt('Kaçıncı üyeyi silmek istersiniz?');
+    const index = parseInt(uyeSil) - 1; //index numarasını yakaladık
+  
+    if (index >= 0 && index < newData.length / 2) {
+      newData.splice(index * 2, 2);
+      temp = '';
+      counter = 0;
+      userCounter = 1;
+      kayitList.innerHTML = '';
+      elemanSayisi.innerHTML = '';
+      if (readListBtn.click()) {
+        newData.length == 0;
+        
+      }
+       //readListBtn Yeniden listeyi okuyarak güncellemeyi sağlar
+    }
+  });
